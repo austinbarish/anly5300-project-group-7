@@ -22,8 +22,14 @@ str(tmp_df)
 ```
 
 ```{r}
+png('corrplot.png', width=1000,height=1000)
 M <- cor(tmp_df)
 corrplot(M, method='color', type='lower', diag=FALSE)
+dev.off()
+```
+
+```{r}
+ggplot(df, aes(Target, Curricular.units.2nd.sem..approved.)) + geom_boxplot()
 ```
 
 ```{r}
@@ -37,10 +43,6 @@ ggplot(df, aes(Target, Previous.qualification..grade.)) + geom_boxplot()
 
 ```{r}
 ggplot(df, aes(Target, Unemployment.rate)) + geom_boxplot()
-```
-
-```{r}
-ggplot(df, aes(Target, Curricular.units.2nd.sem..approved.)) + geom_boxplot()
 ```
 
 ```{r}
