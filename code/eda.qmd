@@ -1,0 +1,75 @@
+```{r}
+library(corrplot)
+library(ggplot2)
+library(dplyr)
+require(plyr)
+```
+
+```{r}
+getwd()
+df <- read.csv('C:/Users/theda/Documents/DSAN-5300/anly5300-project-group-7/data/academic-success.csv', sep=";")
+head(df)
+summary(df)
+str(df)
+table(df$Target)
+prop.table(table(df$Target))
+```
+
+```{r}
+tmp_df <- df
+tmp_df$Target <- as.numeric(factor(tmp_df$Target))
+str(tmp_df)
+```
+
+```{r}
+M <- cor(tmp_df)
+corrplot(M, method='color', type='lower', diag=FALSE)
+```
+
+```{r}
+#continuous variables: previous qualification (grade), admission grade, GDP, inflation rate, unemployment rate
+ggplot(df, aes(Target, Admission.grade)) + geom_boxplot()
+```
+
+```{r}
+ggplot(df, aes(Target, Previous.qualification..grade.)) + geom_boxplot()
+```
+
+```{r}
+ggplot(df, aes(Target, Unemployment.rate)) + geom_boxplot()
+```
+
+```{r}
+#maybe create map?
+```
+
+```{r}
+#contingency tables
+cat_df <- df
+cat_marital <- c('single', 'married', 'widower', 'divorced', 'factor union', 'legally separated')
+cat_df$Marital.status <- mapvalues(cat_df$Marital.status, from=c(1,2,3,4,5,6), to=cat_marital)
+
+marital_table <- table(cat_df$Target, cat_df$Marital.status)
+marital_table
+
+cat_nation <- c('Portuguese', 'German', 'Spanish', 'Italian', 'Dutch', 'English', 'Lithuanian', 'Angolan','Cape Verdean', 'Guinean', 'Mozambican', 'Santomean','Turkish', 'Brazilian', 'Romanian', 'Moldova (Republic of)', 'Mexican', 'Ukrainian', 'Russian', 'Cuban', 'Colombian')
+cat_df$Nacionality <- mapvalues(cat_df$Nacionality, from=c(1,2,6,11,13,14,17,21,22,24,25,26,32,41,62,100,101,103,105,108,109), to=cat_nation)
+
+nation_table <- table(cat_df$Target, cat_df$Nacionality)
+nation_table
+```
+
+```{r}
+#bar plots of contingency tables
+marital_df <- as.data.frame(marital_table)
+colnames(marital_df) <- c('Target', 'Marital.status', 'Count')
+
+ggplot(marital_df, aes(x=Target, y=Count, fill=Marital.status)) + geom_bar(position="dodge", stat="identity")
+```
+
+```{r}
+nation_df <- as.data.frame(nation_table)
+colnames(nation_df) <- c('Target', 'Nacionality', 'Count')
+
+ggplot(nation_df, aes(x=Target, y=Count, fill=Nacionality)) + geom_bar(position="dodge", stat="identity")
+```
