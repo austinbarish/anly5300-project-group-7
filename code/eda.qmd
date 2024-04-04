@@ -3,11 +3,11 @@ library(corrplot)
 library(ggplot2)
 library(dplyr)
 require(plyr)
+library(readr)
 ```
 
 ```{r}
-getwd()
-df <- read.csv('C:/Users/theda/Documents/DSAN-5300/anly5300-project-group-7/data/academic-success.csv', sep=";")
+df <- read.csv('https://raw.githubusercontent.com/austinbarish/anly5300-project-group-7/main/data/academic-success.csv', sep=";")
 head(df)
 summary(df)
 str(df)
