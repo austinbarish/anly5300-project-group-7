@@ -40,6 +40,10 @@ ggplot(df, aes(Target, Unemployment.rate)) + geom_boxplot()
 ```
 
 ```{r}
+ggplot(df, aes(Target, Curricular.units.2nd.sem..approved.)) + geom_boxplot()
+```
+
+```{r}
 #maybe create map?
 ```
 
